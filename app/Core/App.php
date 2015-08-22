@@ -1,11 +1,27 @@
 <?php
-namespace MattMVC\core;
+namespace MattMVC\Core;
 
-use MattMVC\core\Router;
+use MattMVC\Core\Router;
+use MattMVC\Models\Gen\GenModels;
+
 class App
 {
-  public function __construct() {
-    $router = new Router();
-    $url = $router->parseUrl();
+  private $router;
+  const NAME = "Jam";
+  const TAGLINE = "Alternative Newsweekly";
+  const DB_TYPE = "sqlite";
+  const DB_FILE = "../app/development.db";
+  const DB_HOST = "";
+  const DB_NAME = "";
+  const DB_USER = "";
+  const DB_PASS = "";
+  const DB_PREFIX = "";
+
+  public function __construct()
+  {
+    if(ENVIRONMENT == 'development') {
+      new GenModels();
+    }
+    $this->router = new Router();
   }
 }

@@ -1,6 +1,11 @@
 <?php
 
- $route = parse_url(substr($_SERVER["REQUEST_URI"], 1))["path"];
+$url = parse_url(substr($_SERVER["REQUEST_URI"], 1));
+if (isset($url["path"])) {
+  $route = $url["path"];
+} else {
+  $route = "";
+}
 
 if (is_file($route)) {
     if(substr($route, -4) == ".php"){
