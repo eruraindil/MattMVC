@@ -1,4 +1,5 @@
-<?php namespace mattMVC\core;
+<?php
+namespace MattMVC\Core;
 /**
 *	Debug class for PHP
 *
@@ -40,7 +41,7 @@ class Debug
 			return call_user_func_array( array( self , 'printData' ) , $args );
 		}else{
 			self::$level = 1;
-	 		self::alert("Method does not exists");;
+	 		self::alert("Method does not exists");
 		}
 	}
 	/**
@@ -209,7 +210,7 @@ class Debug
 	*/
 	public static function level( $level )
 	{
-		self::$level = abs(int($level));
+		self::$level = abs(intval($level));
 		return new self;
 	}
 	/**
@@ -361,10 +362,9 @@ class Debug
 		error_reporting(0);
 		ini_set('error_reporting',0);
 		ini_set('display_errors',1);
-		set_error_handler(array('Debug','error'),E_ALL);
-		set_exception_handler(array('Debug','exception'));
-		register_shutdown_function(array('Debug','shutdown'));
+		set_error_handler(array('MattMVC\\Core\\Debug','error'),E_ALL);
+		set_exception_handler(array('MattMVC\\Core\\Debug','exception'));
+		register_shutdown_function(array('MattMVC\\Core\\Debug','shutdown'));
 		return new self;
 	}
 }
-?>

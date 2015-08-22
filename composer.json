@@ -3,6 +3,6 @@
     "php": ">=5.4.0"
   },
   "autoload": {
-    "psr-4": {"mattMVC\\": "app/"}
+    "psr-4": {"MattMVC\\": "app/"}
   }
 }
