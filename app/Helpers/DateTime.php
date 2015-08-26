@@ -43,11 +43,18 @@ class DateTime extends \DateTime
   public static function formatForSite($timestamp)
   {
     $ts = new self();
-    $ts->setTimestamp($ts->getTimestamp());
+    $ts->setTimestamp($timestamp);
     if($ts->isOlderThanOneYear()) {
       return $ts->format("F j, Y, g:i a");
     } else {
       return $ts->relativeFormat();
     }
+  }
+
+  public static function formatPercise($timestamp)
+  {
+    $ts = new self();
+    $ts->setTimestamp($timestamp);
+    return $ts->format("F j, Y, g:i a");
   }
 }

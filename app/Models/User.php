@@ -1,6 +1,8 @@
 <?php
 namespace MattMVC\Models;
 
+use MattMVC\Helpers\Image;
+
 class User extends \MattMVC\Models\Db\UserDB
 {
 
@@ -9,4 +11,8 @@ class User extends \MattMVC\Models\Db\UserDB
 		parent::__construct( $fields );
 	}
 
+	public function viewImage()
+	{
+		return Image::viewSqlBlobAsImg($this->getPhoto());
+	}
 }

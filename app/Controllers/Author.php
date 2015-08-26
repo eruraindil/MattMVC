@@ -7,7 +7,7 @@ use MattMVC\Core\Controller;
 use MattMVC\Models\Article;
 use MattMVC\Models\ArticleCategory;
 
-class Category extends Controller
+class Author extends Controller
 {
   public function index($id)
   {
@@ -19,7 +19,7 @@ class Category extends Controller
           "categories" => ArticleCategory::getObjsAll(),
         ]);
       // $this->template("hero", ["title" => "News"]);
-      $this->view("front/index", ["articles" => Article::getObjsByCategory($id)]);
+      $this->view("front/index", ["articles" => Article::getObjsByAuthor($id)]);
       $this->template("footer");
     } else {
       header("Location: /");

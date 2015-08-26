@@ -6,6 +6,8 @@ use MattMVC\Models\Gen\ModelClass as Model;
 class UserDB implements \MattMVC\Models\Gen\ModelInterface
 {
 	protected $db;
+	protected $bio;
+	protected $name;
 	protected $photo;
 	protected $website;
 	protected $id;
@@ -21,6 +23,22 @@ class UserDB implements \MattMVC\Models\Gen\ModelInterface
 		$this->db = $model->getDb();
 	}
 
+	public function getBio()
+	{
+		return $this->bio;
+	}
+	public function setBio($bio)
+	{
+		$this->bio = $bio;
+	}
+	public function getName()
+	{
+		return $this->name;
+	}
+	public function setName($name)
+	{
+		$this->name = $name;
+	}
 	public function getPhoto()
 	{
 		return $this->photo;
@@ -65,12 +83,12 @@ class UserDB implements \MattMVC\Models\Gen\ModelInterface
 	public function save()
 	{
 		$obj = self::getObj($this->id);
-		$data = array('website' => $this->website, 'id' => $this->id, 'email' => $this->email, 'email' => $this->email);		if($obj) {//update
+		$data = array('name' => $this->name, 'photo' => $this->photo, 'website' => $this->website, 'id' => $this->id, 'email' => $this->email, 'email' => $this->email);		if($obj) {//update
 			$this->db->update("User",$data,array('id' => $this->id));
 			return $this->id;
 		} else {//insert
 			$this->db->insert("User",$data);
-			$obj = self::getObj("select * from User where website = :website AND id = :id AND email = :email AND email = :email",array(':website' => $this->website, ':id' => $this->id, ':email' => $this->email, ':email' => $this->email));
+			$obj = self::getObj("select * from User where name = :name AND photo = :photo AND website = :website AND id = :id AND email = :email AND email = :email",array(':name' => $this->name, ':photo' => $this->photo, ':website' => $this->website, ':id' => $this->id, ':email' => $this->email, ':email' => $this->email));
 			return $obj->id;
 		}
 	}
@@ -103,6 +121,26 @@ class UserDB implements \MattMVC\Models\Gen\ModelInterface
 	public static function getObjsAll()
 	{
 		return self::getObjs('select * from User');
+	}
+
+	public static function getObjByBio($bio)
+	{
+		return self::getObj('select * from User where bio = :bio',array(':bio' => $bio));
+	}
+
+	public static function getObjsByBio($bio)
+	{
+		return self::getObjs('select * from User where bio = :bio',array(':bio' =>$bio));
+	}
+
+	public static function getObjByName($name)
+	{
+		return self::getObj('select * from User where name = :name',array(':name' => $name));
+	}
+
+	public static function getObjsByName($name)
+	{
+		return self::getObjs('select * from User where name = :name',array(':name' =>$name));
 	}
 
 	public static function getObjByPhoto($photo)

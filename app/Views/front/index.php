@@ -1,50 +1,51 @@
 <?php
-use MattMVC\Models\User;
-
 use MattMVC\Helpers\DateTime;
-use MattMVC\Helpers\Image;
 ?>
 <!--/stories-->
-<?php foreach($data["articles"] as $article):
-  $author = User::getObjById($article->getAuthor());
-  ?>
-  <div class="row">
-    <br>
-    <div class="col-md-2 col-sm-3 text-center">
-      <a class="story-title" href="/author/<?php echo $article->getAuthor();?>">
-        <img alt="" src="<?php echo Image::viewSqlBlobAsImg($author->getPhoto());?>" style="width:100px;height:100px" class="img-circle">
-      </a>
-    </div>
-    <div class="col-md-10 col-sm-9">
-      <h3>
-        <a href="/article/<?php echo $article->getId();?>">
-          <?php echo $article->getTitle();?>
+<?php if(count($data["articles"])>0):?>
+  <?php foreach($data["articles"] as $article):?>
+    <div class="row">
+      <br>
+      <div class="col-md-2 col-sm-3 text-center">
+        <a class="story-title" href="/author/<?php echo $article->getAuthor();?>">
+          <img alt="" src="<?php echo $article->getAuthorObj()->viewImage();?>" style="width:100px;height:100px" class="img-circle">
         </a>
-      </h3>
-      <div class="row">
-        <div class="col-xs-9">
-          <h4>
-            <a href="http://<?php echo $author->getWebsite();?>">
-              <span class="label label-default">
-                <?php echo $author->getWebsite();?>
-              </span>
-            </a>
-          </h4>
-          <h4>
-            <small style="font-family:courier,'new courier';" class="text-muted">
-              <?php echo DateTime::formatForSite($article->getTimestamp());?>
-              &middot;
-              <a href="/article/<?php echo $article->getId();?>" class="text-muted">Read More</a>
-            </small>
-          </h4>
-        </div>
-        <div class="col-xs-3"></div>
       </div>
-      <br><br>
+      <div class="col-md-10 col-sm-9">
+        <h3>
+          <a href="/article/<?php echo $article->getId();?>">
+            <?php echo $article->getTitle();?>
+          </a>
+        </h3>
+        <div class="row">
+          <div class="col-xs-9">
+            <h4>
+              <a href="http://<?php echo $article->getAuthorObj()->getWebsite();?>">
+                <span class="label label-default">
+                  <?php echo $article->getAuthorObj()->getWebsite();?>
+                </span>
+              </a>
+            </h4>
+            <h4>
+              <small style="font-family:courier,'new courier';" class="text-muted">
+                <span title="<?php echo $article->getTimeStampPrecise();?>">
+                  <?php echo $article->getTimestampGeneral();?>
+                </span>
+                &middot;
+                <a href="/article/<?php echo $article->getId();?>" class="text-muted">Read More</a>
+              </small>
+            </h4>
+          </div>
+          <div class="col-xs-3"></div>
+        </div>
+        <br><br>
+      </div>
     </div>
-  </div>
-  <hr>
-<?php endforeach;?>
+    <hr>
+  <?php endforeach;?>
+<?php else:?>
+  <p>No posts found</p>
+<?php endif;?>
 <div class="row">
   <br>
   <div class="col-md-2 col-sm-3 text-center">

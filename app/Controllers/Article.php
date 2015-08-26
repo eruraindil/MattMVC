@@ -4,22 +4,23 @@ namespace MattMVC\Controllers;
 use MattMVC\Core\App;
 use MattMVC\Core\Controller;
 
-use MattMVC\Models\Article;
+use MattMVC\Models\Article as Articles;
 use MattMVC\Models\ArticleCategory;
 
-class Category extends Controller
+class Article extends Controller
 {
   public function index($id)
   {
     if(isset($id)) {
+      $article = Articles::getObjById($id);
       $this->template("header",
         [
-          "title" => App::NAME,
-          "subtitle" => App::TAGLINE,
+          "title" => $article->getTitle(),
+          "subtitle" => $article->getAuthorObj()->getName(),
           "categories" => ArticleCategory::getObjsAll(),
         ]);
       // $this->template("hero", ["title" => "News"]);
-      $this->view("front/index", ["articles" => Article::getObjsByCategory($id)]);
+      $this->view("article/index", ["article" => $article]);
       $this->template("footer");
     } else {
       header("Location: /");

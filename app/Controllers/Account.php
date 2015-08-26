@@ -6,12 +6,13 @@ use MattMVC\Core\Controller;
 
 use MattMVC\Models\Article;
 use MattMVC\Models\ArticleCategory;
+use MattMVC\Models\User;
 
-class Category extends Controller
+class Account extends Controller
 {
-  public function index($id)
+  public function index()
   {
-    if(isset($id)) {
+    if(isset($_SESSION["username"])) {
       $this->template("header",
         [
           "title" => App::NAME,
@@ -19,7 +20,7 @@ class Category extends Controller
           "categories" => ArticleCategory::getObjsAll(),
         ]);
       // $this->template("hero", ["title" => "News"]);
-      $this->view("front/index", ["articles" => Article::getObjsByCategory($id)]);
+      $this->view("account/index", ["user" => User::getObjByEmail($_SESSION["username"])]);
       $this->template("footer");
     } else {
       header("Location: /");

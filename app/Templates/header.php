@@ -70,7 +70,14 @@
                 </ul>
               </li>
             <?php else:?>
-              <li><a href="/auth/logout">Logout <?php echo $_SESSION["username"];?></a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#"><?php echo $_SESSION["username"];?></a></li>
+                  <li><a href="/account/">Edit Account</a></li>
+                </ul>
+              </li>
+              <li><a href="/auth/logout">Logout</a></li>
             <?php endif;?>
             <li role="separator" class="divider"></li>
           </ul>
@@ -80,7 +87,7 @@
     <div id="masthead">
       <div class="container">
         <div class="row">
-          <div class="col-md-7">
+          <div class="col-md-12">
             <h1><?php echo $data['title'];?>
               <p class="lead"><?php echo $data['subtitle'];?></p>
             </h1>
