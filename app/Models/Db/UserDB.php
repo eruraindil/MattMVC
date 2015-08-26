@@ -6,6 +6,8 @@ use MattMVC\Models\Gen\ModelClass as Model;
 class UserDB implements \MattMVC\Models\Gen\ModelInterface
 {
 	protected $db;
+	protected $photo;
+	protected $website;
 	protected $id;
 	protected $email;
 	protected $password;
@@ -19,6 +21,22 @@ class UserDB implements \MattMVC\Models\Gen\ModelInterface
 		$this->db = $model->getDb();
 	}
 
+	public function getPhoto()
+	{
+		return $this->photo;
+	}
+	public function setPhoto($photo)
+	{
+		$this->photo = $photo;
+	}
+	public function getWebsite()
+	{
+		return $this->website;
+	}
+	public function setWebsite($website)
+	{
+		$this->website = $website;
+	}
 	public function getId()
 	{
 		return $this->id;
@@ -47,12 +65,12 @@ class UserDB implements \MattMVC\Models\Gen\ModelInterface
 	public function save()
 	{
 		$obj = self::getObj($this->id);
-		$data = array('email' => $this->email, 'email' => $this->email);		if($obj) {//update
+		$data = array('website' => $this->website, 'id' => $this->id, 'email' => $this->email, 'email' => $this->email);		if($obj) {//update
 			$this->db->update("User",$data,array('id' => $this->id));
 			return $this->id;
 		} else {//insert
 			$this->db->insert("User",$data);
-			$obj = self::getObj("select * from User where email = :email AND email = :email",array(':email' => $this->email, ':email' => $this->email));
+			$obj = self::getObj("select * from User where website = :website AND id = :id AND email = :email AND email = :email",array(':website' => $this->website, ':id' => $this->id, ':email' => $this->email, ':email' => $this->email));
 			return $obj->id;
 		}
 	}
@@ -85,6 +103,26 @@ class UserDB implements \MattMVC\Models\Gen\ModelInterface
 	public static function getObjsAll()
 	{
 		return self::getObjs('select * from User');
+	}
+
+	public static function getObjByPhoto($photo)
+	{
+		return self::getObj('select * from User where photo = :photo',array(':photo' => $photo));
+	}
+
+	public static function getObjsByPhoto($photo)
+	{
+		return self::getObjs('select * from User where photo = :photo',array(':photo' =>$photo));
+	}
+
+	public static function getObjByWebsite($website)
+	{
+		return self::getObj('select * from User where website = :website',array(':website' => $website));
+	}
+
+	public static function getObjsByWebsite($website)
+	{
+		return self::getObjs('select * from User where website = :website',array(':website' =>$website));
 	}
 
 	public static function getObjById($id)

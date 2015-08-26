@@ -11,7 +11,7 @@ class Router
   {
     $url = $this->parseUrl();
 
-    if(file_exists("../Controllers/" . ucwords($url[0]) . ".php")) {
+    if(file_exists(__DIR__ . "/../Controllers/" . ucwords($url[0]) . ".php")) {
       $this->controller = $url[0];
       unset($url[0]);
     }
@@ -27,7 +27,7 @@ class Router
     }
 
     $this->params = $url ? array_values($url) : [];
-
+    //\MattMVC\Core\Debug::alert(print_r($this,1));
     call_user_func_array([$this->controller, $this->method], $this->params);
   }
 

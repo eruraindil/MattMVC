@@ -22,6 +22,7 @@ class App
     if(ENVIRONMENT == 'development') {
       new GenModels();
     }
+    session_start();
     $this->router = new Router();
   }
 }
