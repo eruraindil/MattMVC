@@ -14,10 +14,10 @@
     <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <link href="/static/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     <!--[if lt IE 9]>
-			<script src="/static/html5shiv/html5shiv.min.js"></script>
-		<![endif]-->
+      <script src="/static/html5shiv/html5shiv.min.js"></script>
+    <![endif]-->
     <link href="/css/theme.css" rel="stylesheet" />
-    <link href="/css/styles.css" rel="stylesheet" />
+    <link href="/css/main.css" rel="stylesheet" />
   </head>
   <body>
     <header class="navbar navbar-bright navbar-fixed-top" role="banner">
@@ -103,7 +103,6 @@
           </div> -->
         </div>
       </div><!-- /cont -->
-
       <div class="container">
         <div class="row">
           <div class="col-md-12">
@@ -111,12 +110,9 @@
           </div>
         </div>
       </div><!-- /cont -->
-
     </div>
     <div class="container">
       <div class="row">
-
         <div class="col-md-12">
-
           <div class="panel">
             <div class="panel-body">

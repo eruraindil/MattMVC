@@ -1,0 +1,2 @@
+#!/bin/bash
+./parallel_commands "php -S localhost:8000 devRouter.php" "sass --watch sass:css --scss --unix-newlines"

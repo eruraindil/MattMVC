@@ -1,0 +1,50 @@
+@mixin box-sizing($size) {
+  -webkit-box-sizing: $size;
+     -moz-box-sizing: $size;
+          box-sizing: $size;
+}
+
+@mixin border-top-radius($px) {
+  border-top-left-radius: $px;
+  border-top-right-radius: $px;
+}
+
+@mixin border-bottom-radius($px) {
+  border-bottom-right-radius: $px;
+  border-bottom-left-radius: $px;
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+
+  .form-signin-heading,
+  .checkbox {
+    margin-bottom: 10px;
+  }
+  .checkbox {
+    font-weight: normal;
+  }
+  .form-control {
+    position: relative;
+    height: auto;
+    @include box-sizing(border-box);
+    padding: 10px;
+    font-size: 16px;
+  }
+  .form-control:focus {
+    z-index: 2;
+  }
+  input[type="email"] {
+    margin-bottom: -1px;
+    @include border-bottom-radius(0);
+  }
+  input[type="password"] {
+    margin-bottom: 10px;
+    @include border-top-radius(0);
+  }
+  label {
+    color: #646464;
+  }
+}
