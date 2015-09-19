@@ -34,7 +34,11 @@
         <nav class="collapse navbar-collapse" role="navigation">
           <ul class="nav navbar-nav">
             <?php foreach($data['categories'] as $category):?>
-              <li class="active">
+              <?php if(isset($data['currCategory']) && $category->getId() == $data['currCategory']):?>
+                <li class="active">
+              <?php else:?>
+                <li>
+              <?php endif;?>
                 <a href="/category/<?php echo $category->getId();?>">
                   <?php echo $category->getName();?>
                 </a>
@@ -115,4 +119,4 @@
       <div class="row">
         <div class="col-md-12">
           <div class="panel">
-            <div class="panel-body">
+            <div class="panel-body" id="content">

@@ -14,9 +14,10 @@ class Category extends Controller
     if(isset($id)) {
       $this->template("header",
         [
-          "title" => App::NAME,
-          "subtitle" => App::TAGLINE,
+          "title" => ArticleCategory::getObj($id)->getName(),
+          "subtitle" => App::NAME . " " . App::TAGLINE,
           "categories" => ArticleCategory::getObjsAll(),
+          "currCategory" => $id,
         ]);
       // $this->template("hero", ["title" => "News"]);
       $this->view("front/index", ["articles" => Article::getObjsByCategory($id)]);

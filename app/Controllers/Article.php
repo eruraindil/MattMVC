@@ -16,7 +16,8 @@ class Article extends Controller
       $this->template("header",
         [
           "title" => $article->getTitle(),
-          "subtitle" => $article->getAuthorObj()->getName(),
+        //  "subtitle" => $article->getAuthorObj()->getName(),
+          "subtitle" => App::NAME . " / " . ArticleCategory::getObj($article->getCategory())->getName(),
           "categories" => ArticleCategory::getObjsAll(),
         ]);
       // $this->template("hero", ["title" => "News"]);

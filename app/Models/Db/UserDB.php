@@ -6,6 +6,7 @@ use MattMVC\Models\Gen\ModelClass as Model;
 class UserDB implements \MattMVC\Models\Gen\ModelInterface
 {
 	protected $db;
+	protected $authKey;
 	protected $bio;
 	protected $name;
 	protected $photo;
@@ -23,6 +24,14 @@ class UserDB implements \MattMVC\Models\Gen\ModelInterface
 		$this->db = $model->getDb();
 	}
 
+	public function getAuthKey()
+	{
+		return $this->authKey;
+	}
+	public function setAuthKey($authKey)
+	{
+		$this->authKey = $authKey;
+	}
 	public function getBio()
 	{
 		return $this->bio;
@@ -83,12 +92,12 @@ class UserDB implements \MattMVC\Models\Gen\ModelInterface
 	public function save()
 	{
 		$obj = self::getObj($this->id);
-		$data = array('name' => $this->name, 'photo' => $this->photo, 'website' => $this->website, 'id' => $this->id, 'email' => $this->email, 'email' => $this->email);		if($obj) {//update
+		$data = array('bio' => $this->bio, 'name' => $this->name, 'photo' => $this->photo, 'website' => $this->website, 'id' => $this->id, 'email' => $this->email, 'email' => $this->email);		if($obj) {//update
 			$this->db->update("User",$data,array('id' => $this->id));
 			return $this->id;
 		} else {//insert
 			$this->db->insert("User",$data);
-			$obj = self::getObj("select * from User where name = :name AND photo = :photo AND website = :website AND id = :id AND email = :email AND email = :email",array(':name' => $this->name, ':photo' => $this->photo, ':website' => $this->website, ':id' => $this->id, ':email' => $this->email, ':email' => $this->email));
+			$obj = self::getObj("select * from User where bio = :bio AND name = :name AND photo = :photo AND website = :website AND id = :id AND email = :email AND email = :email",array(':bio' => $this->bio, ':name' => $this->name, ':photo' => $this->photo, ':website' => $this->website, ':id' => $this->id, ':email' => $this->email, ':email' => $this->email));
 			return $obj->id;
 		}
 	}
@@ -121,6 +130,16 @@ class UserDB implements \MattMVC\Models\Gen\ModelInterface
 	public static function getObjsAll()
 	{
 		return self::getObjs('select * from User');
+	}
+
+	public static function getObjByAuthKey($authKey)
+	{
+		return self::getObj('select * from User where authKey = :authKey',array(':authKey' => $authKey));
+	}
+
+	public static function getObjsByAuthKey($authKey)
+	{
+		return self::getObjs('select * from User where authKey = :authKey',array(':authKey' =>$authKey));
 	}
 
 	public static function getObjByBio($bio)
