@@ -74,7 +74,8 @@ class ArticleDB implements \MattMVC\Models\Gen\ModelInterface
 	public function save()
 	{
 		$obj = self::getObj($this->id);
-		$data = array('title' => $this->title, 'body' => $this->body, 'author' => $this->author, 'category' => $this->category, 'category' => $this->category);		if($obj) {//update
+		$data = array('id' => $this->id, 'title' => $this->title, 'body' => $this->body, 'author' => $this->author, 'category' => $this->category, 'timestamp' => $this->timestamp, 'timestamp' => $this->timestamp);
+		if($obj) {//update
 			$this->db->update("Article",$data,array('id' => $this->id));
 			return $this->id;
 		} else {//insert

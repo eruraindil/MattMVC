@@ -38,7 +38,8 @@ class ArticleCategoryDB implements \MattMVC\Models\Gen\ModelInterface
 	public function save()
 	{
 		$obj = self::getObj($this->id);
-		$data = array('name' => $this->name);		if($obj) {//update
+		$data = array('id' => $this->id, 'name' => $this->name, 'name' => $this->name);
+		if($obj) {//update
 			$this->db->update("ArticleCategory",$data,array('id' => $this->id));
 			return $this->id;
 		} else {//insert

@@ -92,7 +92,8 @@ class UserDB implements \MattMVC\Models\Gen\ModelInterface
 	public function save()
 	{
 		$obj = self::getObj($this->id);
-		$data = array('bio' => $this->bio, 'name' => $this->name, 'photo' => $this->photo, 'website' => $this->website, 'id' => $this->id, 'email' => $this->email, 'email' => $this->email);		if($obj) {//update
+		$data = array('authKey' => $this->authKey, 'bio' => $this->bio, 'name' => $this->name, 'photo' => $this->photo, 'website' => $this->website, 'id' => $this->id, 'email' => $this->email, 'password' => $this->password, 'password' => $this->password);
+		if($obj) {//update
 			$this->db->update("User",$data,array('id' => $this->id));
 			return $this->id;
 		} else {//insert

@@ -100,13 +100,13 @@ class GenModels
     $output .= "\n\tpublic function save()\n\t{\n";
     $output .= "\t\t\$obj = self::getObj(\$this->id);\n";
     $output .= "\t\t\$data = array(";
-    $i = 1;
-    for($i; $i < \count($table['columns']) - 1; $i++) {
+    $i = 0;
+    for($i; $i < \count($table['columns']); $i++) {
       $field = $this->getField($table['columns'][$i]);
       $output .= "'" . $field . "' => \$this->" . $field . ", ";
     }
     $output .= "'" . $field . "' => \$this->" . $field;
-    $output .= ");";
+    $output .= ");\n";
     $output .= "\t\tif(\$obj) {//update\n";
     $output .= "\t\t\t\$this->db->update(\"" . App::DB_PREFIX . $table[0] . "\",\$data,array('id' => \$this->id));\n";
     $output .= "\t\t\treturn \$this->id;\n";
