@@ -4,6 +4,9 @@ namespace MattMVC\Core;
 use MattMVC\Core\Router;
 use MattMVC\Models\Gen\GenModels;
 
+use MattMVC\Helpers\Cookie;
+use MattMVC\Helpers\Session;
+
 use MattMVC\Models\User;
 
 class App
@@ -28,14 +31,15 @@ class App
     $this->router = new Router();
 
     if(
-      !isset($_SESSION["username"]) &&
-      isset($_COOKIE[App::NAME . "_username"]) &&
-      isset($_COOKIE[App::NAME . "_authKey"])
+      !Session::loggedIn() &&
+      null !== Cookie::getUsername() &&
+      null !== Cookie::getAuthKey()
     ) {
-      $user = User::getObjByAuthKey($_COOKIE[App::NAME . "_authKey"]);
-      if(isset($user) && $user->getEmail() == $_COOKIE[App::NAME . "_username"]) {
-        $_SESSION["username"] = $_COOKIE[App::NAME . "_username"];
-        $_SESSION["remember"] = true;
+      $user = User::getObjByAuthKey(Cookie::getAuthKey());
+      if(isset($user) && $user->getEmail() == Cookie::getUsername()) {
+        Session::setUsername($user->getEmail());
+        Session::setRememberFlag(true);
+        Cookie::setRememberMeCookies($user->getEmail(),$user->getAuthKey());
       }
     }
   }

@@ -4,6 +4,8 @@ namespace MattMVC\Controllers;
 use MattMVC\Core\App;
 use MattMVC\Core\Controller;
 
+use MattMVC\Helpers\Cookie;
+use MattMVC\Helpers\Session;
 use MattMVC\Helpers\String;
 
 use MattMVC\Models\User;
@@ -13,7 +15,7 @@ class Auth extends Controller
 {
   public function index()
   {
-    if(isset($_SESSION["username"])) {
+    if(Session::loggedIn) {
       header("Location: /");
     } else {
       $this->template("header",
@@ -31,16 +33,15 @@ class Auth extends Controller
   public function login()
   {
     $user = User::getObjByEmail($_POST["email"]);
-    if(isset($user) && $user->getPassword() == $_POST["password"]) {
-      $_SESSION["username"] = $user->getEmail();
+    if(isset($user) && password_verify($_POST["password"], $user->getPassword())) {
+      Session::setUsername($user->getEmail());
 
       $user->setAuthKey(String::generateRandomString());
       $user->save();
 
       if(isset($_POST['remember-me'])) {
-        $_SESSION["remember"] = true;
-        setcookie(App::NAME . "_username", $user->getEmail(), time() + 60*60*24*7);
-        setcookie(App::NAME . "_authKey", $user->getAuthKey(), time() + 60*60*24*7);
+        Session::setRememberMeFlag();
+        Cookie::setRememberMeCookies($user->getEmail(),$user->getAuthKey());
       }
       header("Location: /");
     } else {
@@ -50,15 +51,21 @@ class Auth extends Controller
 
   public function logout()
   {
-    if(isset($_SESSION["username"])) {
-      if(isset($_SESSION["remember"])) {
-        unset($_SESSION["remember"]);
-        setcookie(App::NAME . "_username", "", time() - 60);
-        setcookie(App::NAME . "_authKey", "", time() - 60);
+    if(Session::loggedIn()) {
+      if(Session::rememberMe()) {
+        Session::unsetRememberMeFlag();
+        Cookie::unsetRememberMeCookies("", "", -60);
       }
-      unset($_SESSION["username"]);
+      Session::unsetLoggedIn();
       session_unset();
     }
     header("Location: /");
+  }
+
+  public function test($password)
+  {
+  //  echo String::generateRandomString();
+
+  //echo password_hash ($password , PASSWORD_BCRYPT);
   }
 }
