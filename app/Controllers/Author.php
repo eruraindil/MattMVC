@@ -12,14 +12,15 @@ class Author extends Controller
   public function index($id)
   {
     if(isset($id)) {
+      $author = Article::getObjsByAuthor($id);
       $this->template("header",
         [
-          "title" => App::NAME,
-          "subtitle" => App::TAGLINE,
+          "title" => $author[0]->getAuthorObj()->getName(),
+          "subtitle" => App::NAME . " " . App::TAGLINE,
           "categories" => ArticleCategory::getObjsAll(),
         ]);
       // $this->template("hero", ["title" => "News"]);
-      $this->view("front/index", ["articles" => Article::getObjsByAuthor($id)]);
+      $this->view("front/author", ["articles" => $author]);
       $this->template("footer");
     } else {
       header("Location: /");
