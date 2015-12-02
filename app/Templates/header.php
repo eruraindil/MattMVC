@@ -45,14 +45,6 @@
               </li>
             <?php endforeach;?>
           </ul>
-          <form class="navbar-form form-inline pull-right">
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="Search">
-              <span class="input-group-btn">
-                <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
-              </span>
-            </div>
-          </form>
           <ul class="nav navbar-right navbar-nav">
             <li role="separator" class="divider"></li>
             <?php if(!isset($_SESSION["username"])):?>
@@ -85,6 +77,14 @@
             <?php endif;?>
             <li role="separator" class="divider"></li>
           </ul>
+          <form class="navbar-form form-inline pull-right" action="/search/query" method="get">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search" name="q"<?php echo isset($data['query']) ? " value='" . $data['query'] . "'" : ""?>>
+              <span class="input-group-btn">
+                <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+              </span>
+            </div>
+          </form>
         </nav>
       </div>
     </header>

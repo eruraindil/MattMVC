@@ -18,6 +18,13 @@ use MattMVC\Helpers\DateTime;
           </a>
         </h3>
         <div class="row">
+          <div class="col-xs-12">
+            <p>
+              <?php echo $article->viewSearchContext($data["query"]);?>
+            </p>
+          </div>
+        </div>
+        <div class="row">
           <div class="col-xs-9">
             <h4>
               <a href="http://<?php echo $article->getAuthorObj()->getWebsite();?>">
